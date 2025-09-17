@@ -1,0 +1,9 @@
+name = "mcsrtools-villages"
+compatibility_date = "2025-09-13"
+
+[assets]
+not_found_handling = "single-page-application"
+
+[[routes]]
+pattern = "mcsr.tools/villages*"
+zone_name = "mcsr.tools"

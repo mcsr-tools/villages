@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Minecraft Villages</title>
+    <meta name="description" content="Overview of Minecraft village structures, indicating useful information for speedrunners such as loot tables and the availability of specific blocks (e.g., beds), which are essential throughout a speedrun.">
+    <link rel="icon" href="/favicon.png" />
+    <link rel="preconnect" href="https://static.wikia.nocookie.net" />
+    <link rel="prefetch" href="/items.avif" />
+    <link rel="prefetch" href="/blocks.avif" />
+    <link rel="stylesheet" as="style" href="/src/index.css" />
+    <script type="module" src="/src/index.js"></script>
+  </head>
+  <body class="dark">
+    <header class="fixed responsive">
+      <nav class="scroll group primary-container" x-data>
+        <h1 class="max small l">Minecraft Villages</h1>
+        <button
+          x-cloak
+          @click="$store.village.toggleHouses()"
+          :class="`transparent circle ${$store.village.houses && 'active'}`"
+        >
+          <i>holiday_village</i>
+        </button>
+        <template x-for="type in $store.village.types">
+          <button
+            x-text="type"
+            @click="$store.village.select(type)"
+            :class="`max no-round ${$store.village.type === type && 'active'}`"
+          ></button>
+        </template>
+      </nav>
+    </header>
+    <main class="responsive">
+      <p>Quiz yourself <a class="link" href="https://learnyourfuckinghouses.ch" target="_blank">here</a>.</p>
+      <div class="villages" x-data>
+        <template x-for="(it, structure) in $store.village.structures">
+          <article class="border no-round">
+            <img
+              class="middle responsive"
+              :src="!(new URLSearchParams(location.search).has('og')) && it.images?.highlight && `${$store.baseUrl}/${it.images.highlight}` || it.images.image.split('/revision')[0]"
+              :alt="structure"
+              loading="lazy"
+            />
+            <div class="absolute top left right padding top-shadow">
+              <div class="row no-margin tiny-space left-align">
+                <template
+                  x-data="{ spriteClass: $store.structureTypeSprite[$store.village.structureLootKey(structure)?.toLowerCase()] }"
+                  x-if="spriteClass"
+                >
+                  <span :class="spriteClass"></span>
+                </template>
+                <p x-text="structure" class="capitalize small-text max"></p>
+              </div>
+            </div>
+            <div class="absolute bottom left right padding bottom-shadow" x-data>
+              <template x-for="[name, total] in $store.village.grepStructureMaterials(structure, 'bed')">
+                <span
+                  x-show="$store.village.structureHasMaterial(structure, 'bed')"
+                  :class="`sprite block-sprite big ${name.split(' ')[0].toLowerCase()}-bed`"
+                >
+                  <div class="tooltip" x-text="total"></div>
+                </span>
+              </template>
+              <span
+                x-show="$store.village.structureHasMaterial(structure, 'crafting table')"
+                class="sprite block-sprite big crafting-table"
+              ></span>
+              <span
+                x-show="$store.village.structureHasMaterial(structure, 'chest')"
+                class="sprite block-sprite big chest"
+                @click="$store.village.showDialog(structure)"
+              ></span>
+              <span
+                x-show="$store.village.structureHasMaterial(structure, 'barrel')"
+                class="sprite block-sprite big barrel"
+                @click="$store.village.showDialog(structure)"
+              ></span>
+            </div>
+          </article>
+        </template>
+      </div>
+    </main>
+    <footer class="responsive surface">
+      <p>
+        <span>Crafted by Yatko</span><br />
+        <span class="small-text">
+          mcsr.tools is not affiliated with Minecraft or Microsoft. All Trademarks referred to are the
+          property of their respective owners.
+        </span>
+      </p>
+    </footer>
+    <div x-data :class="`overlay ${$store.village.dialog && 'active'}`" @click="$store.village.closeDialog()"></div>
+    <dialog x-data :class="`medium no-round ${$store.village.dialog && 'active'}`">
+      <nav class="right-align">
+        <h4 class="small capitalize align-left" x-text="$store.village.structure"></h4>
+        <div class="max">
+          <button class="small circle chip fill" @click="$store.village.closeDialog()">
+            <i>close</i>
+          </button>
+        </div>
+      </nav>
+      <hr class="medium" />
+      <div>
+        <table class="stripes center-align no-space">
+          <thead class="l">
+            <tr>
+              <th>Item</th>
+              <template x-for="header in $store.village.structureLoot?.headers">
+                <th x-text="header"></th>
+              </template>
+            </tr>
+          </thead>
+          <tbody>
+            <template x-for="(loot, name) in $store.village.structureLoot?.loot">
+              <tr>
+                <td>
+                  <span
+                    :class="`sprite ${loot.image.sprite.toLowerCase().includes('block') ? 'block' : 'item'}-sprite`"
+                    :style="`--x: calc(max(${loot.image.pos[0]},-1*${loot.image.pos[0]}) / var(--size)); --y: calc(max(${loot.image.pos[1]},-1*${loot.image.pos[1]}) / var(--size)); --scale: 1.250;`"
+                  >
+                    <div class="tooltip right" x-text="name"></div>
+                  </span>
+                </td>
+                <template x-for="value in loot.values">
+                  <td x-text="value"></td>
+                </template>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </dialog>
+  </body>
+</html>

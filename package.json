@@ -1,0 +1,26 @@
+{
+  "name": "@mcsr-tools/villages",
+  "version": "1.0.0",
+  "private": "true",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "wrangler deploy",
+    "gen:loot": "node --experimental-transform-types bin/gen/index.ts loot",
+    "gen:structures": "node --experimental-transform-types bin/gen/index.ts structures"
+  },
+  "dependencies": {
+    "@cloudflare/vite-plugin": "^1.13.2",
+    "alpinejs": "^3.15.0",
+    "beercss": "^3.12.3",
+    "mwn": "^3.0.1",
+    "node-html-parser": "^7.0.1",
+    "typescript": "^5.8.3",
+    "vite": "^7.1.5",
+    "vite-plugin-generate-file": "^0.3.1",
+    "wrangler": "^4.37.1"
+  }
+}

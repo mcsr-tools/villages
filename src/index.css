@@ -1,0 +1,199 @@
+@import "beercss/dist/cdn/beer.css";
+
+[x-cloak] {
+  display: none !important;
+}
+
+.villages {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1rem;
+
+  article {
+    position: relative;
+    flex-basis: 20%;
+    flex: 0 0 150px;
+    aspect-ratio: 1 / 1;
+
+    img {
+      object-fit: contain;
+    }
+
+    > .bottom {
+      display: flex;
+      gap: 0.25rem;
+    }
+  }
+}
+
+.block-sprite,
+.sprite {
+  --sw: 768px;
+  --sh: 768px;
+  background: url(/blocks.avif);
+  --x: 46;
+  --y: 7;
+}
+
+.item-sprite {
+  --sw: 256px;
+  --sh: 1072px;
+  background: url(/items.avif);
+  --x: 15;
+  --y: 23;
+}
+
+.sprite {
+  --size: 16;
+  --scale: 1;
+
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  display: inline-block;
+  width: calc(var(--scale) * var(--size) * 1px);
+  height: calc(var(--scale) * var(--size) * 1px);
+  background-size: calc(var(--scale) * var(--sw)) calc(var(--scale) * var(--sh));
+  background-position-x: calc(var(--x) * var(--scale) * var(--size) * -1px);
+  background-position-y: calc(var(--y) * var(--scale) * var(--size) * -1px);
+  border-radius: unset;
+
+  &.big {
+    --scale: 1.75;
+  }
+
+  &.block-sprite.chest {
+    --x: 19;
+    --y: 3;
+    cursor: pointer;
+  }
+
+  &.block-sprite.white-bed {
+    --x: 35;
+    --y: 34;
+  }
+
+  &.block-sprite.cyan-bed {
+    --x: 6;
+    --y: 33;
+  }
+
+  &.block-sprite.green-bed {
+    --x: 20;
+    --y: 33;
+  }
+
+  &.block-sprite.blue-bed {
+    --x: 27;
+    --y: 33;
+  }
+
+  &.block-sprite.lime-bed {
+    --x: 41;
+    --y: 33;
+  }
+
+  &.block-sprite.orange-bed {
+    --x: 7;
+    --y: 34;
+  }
+
+  &.block-sprite.purple-bed {
+    --x: 21;
+    --y: 34;
+  }
+
+  &.block-sprite.red-bed {
+    --x: 28;
+    --y: 34;
+  }
+
+  &.block-sprite.yellow-bed {
+    --x: 42;
+    --y: 34;
+  }
+
+  &.block-sprite.barrel {
+    --x: 3;
+    --y: 21;
+    cursor: pointer;
+  }
+
+  &.block-sprite.brewing-stand {
+    --x: 40;
+    --y: 31;
+  }
+
+  &.block-sprite.crafting-table {
+    --x: 0;
+    --y: 32;
+  }
+
+  &.block-sprite.stonecutter {
+    --x: 23;
+    --y: 21;
+  }
+
+  &.block-sprite.fletching-table {
+    --x: 12;
+    --y: 21;
+  }
+
+  &.item-sprite.iron-helmet {
+    --x: 5;
+    --y: 26;
+  }
+
+  &.item-sprite.iron-sword {
+    --x: 0;
+    --y: 28;
+  }
+
+  &.item-sprite.iron-pickaxe {
+    --x: 6;
+    --y: 29;
+  }
+
+  &.item-sprite.raw-cod {
+    --x: 9;
+    --y: 21;
+  }
+
+  &.item-sprite.paper {
+    --x: 10;
+    --y: 3;
+  }
+
+  &.item-sprite.raw-porkchop {
+    --x: 7;
+    --y: 5;
+  }
+
+  &.item-sprite.leather {
+    --x: 7;
+    --y: 6;
+  }
+
+  &.item-sprite.shears {
+    --x: 9;
+    --y: 29;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .villages article {
+    flex: 1 0 150px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .villages article {
+    flex: 0 1 calc(50% - 0.5rem);
+    box-sizing: border-box !important;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  body > header > nav > button.max {
+    flex: 0 !important;
+  }
+}
